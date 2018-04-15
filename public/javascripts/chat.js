@@ -3,27 +3,24 @@ var app = angular.module('chatApp', ['ngMaterial']);
 app.config(function ($mdThemingProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('indigo')
-        .accentPalette('orange');
+        .accentPalette('red');
 });
 
 app.controller('chatController', function ($scope) {
-    $scope.messages = [
-        {
-            'sender': 'USER',
-            'text': 'Hello'
-				},
-        {
-            'sender': 'BOT',
-            'text': 'What can I do for you?'
-				},
-        {
-            'sender': 'USER',
-            'text': 'Help me search'
-				},
-        {
-            'sender': 'BOT',
-            'text': 'What would you like me to search for?'
-				}
-			];
+    $scope.messages = [];
 
+    var exampleSocket = new WebSocket('ws://localhost:9000/chatSocket');
+
+    exampleSocket.onmessage = function (event) {
+        var jsonData = JSON.parse(event.data); //parse string to JSON
+        jsonData.time = new Date()
+            .toLocaleTimeString(); //returns a time stream
+        $scope.messages.push(jsonData); //appending to the array
+        $scope.$apply(); //
+        console.log(jsonData);
+    };
+    $scope.sendMessage = function () {
+        exampleSocket.send($scope.userMessage); //input field and user variable are bound together
+        $scope.userMessage = '';
+    };
 });

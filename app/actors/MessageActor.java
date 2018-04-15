@@ -45,7 +45,7 @@ public class MessageActor extends UntypedActor {
             messageObject.sender = Message.Sender.USER;
             out.tell(mapper.writeValueAsString(messageObject), self());
             //writeValueAsString sends JSON, self to say refer to this actor itself
-            String query = newsAgentService.getNewsAgentResponse("Find" + messageObject.text, UUID.randomUUID()).query;
+            String query = newsAgentService.getNewsAgentResponse("Find " + messageObject.text, UUID.randomUUID()).query;
             feedResponse = feedService.getFeedByQuery(query);
             messageObject.text = (feedResponse.title == null) ? "No results found" : "Showing results for: " + query;
             messageObject.feedResponse = feedResponse;

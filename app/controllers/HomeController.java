@@ -20,9 +20,10 @@ public class HomeController extends Controller {
     public Result chat() {
         return ok(chat.render());
     }
-}
-
     //leagacy websocket type of data
     public LegacyWebSocket<String> chatSocket() { //using only String data
         return WebSocket.withActor(MessageActor::props);//initialise an actor which takes default properties
     }
+}
+
+    

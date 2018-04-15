@@ -6,8 +6,9 @@ app.config(function ($mdThemingProvider) {
         .accentPalette('red');
 });
 
-app.controller('chatController', function ($scope) {
+app.controller('chatController', function ($scope, $sce) {
     $scope.messages = [];
+    $scope.trust = $sce.trustAsHtml;
 
     var exampleSocket = new WebSocket('ws://localhost:9000/chatSocket');
 

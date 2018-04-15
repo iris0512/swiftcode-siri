@@ -15,7 +15,7 @@
             <div ng-repeat="message in messages" layout="column" layout-align="{{message.sender=='BOT'?'start start':'start end'}}">
                 <md-card class="message-card" ng-style=" message.sender=='BOT'? {'background-color': '#db6fac',color:'#f4f7f9'} :{'background-color': '#8f72d8',color:'#f4f7f9'}">
                     <span>{{message.text}}</span>
-                    <span>{{message.feedResponse.description}}</span>
+                    <span ng-bind-html="trust(message.feedResponse.description)">{{message.feedResponse.description}}</span>
                     <span class="message-time">{{message.time}}</span>
                 </md-card>
             </div>
